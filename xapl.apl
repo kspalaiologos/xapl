@@ -21,15 +21,15 @@
     }
 
     ⍝ N-th root, by default square.
-    Root←{⍺←2 ⋄ ⍵*÷⍺}
+    Root←{⍺←2⋄⍵*÷⍺}
     ⍝ `⍣¯1` wrapped in a single operator.
     Inverse←{⍺←⊢⋄⍺(⍺⍺⍣¯1)⍵}
     ⍝ Predecessor of a number.
     Decrement←{⍵-1}
-    ⍝ Successor of a number.
+    ⍝ Increment of a number.
     Increment←{⍵+1}
-    ⍝ convert omega to base alpha
-    Percent←{(⍺∘⊥⍣¯1)⍵}
+    ⍝ convert omega to base alpha, 2 by default.
+    Percent←{⍺←2⋄(⍺∘⊥⍣¯1)⍵}
     ⍝ calculate omega-th fibonacci number
     FancyF←{⍺←0 1⋄0=⍵:⊃⍺⋄(1↓⍺,+/⍺)∇⍵-1}
     ⍝ filter operator
