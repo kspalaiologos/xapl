@@ -1,7 +1,4 @@
 
-⍝ Revision: v1.0
-⍝ Copyright (C) by Kamila Szewczyk.
-
 :Namespace xapl
     eval←{
         lhs←{('''[^'']+''|(',⍵,')')}
@@ -11,7 +8,7 @@
         code←((lhs'⍭')⎕R({' (StileTilde) '}rhs))code
         code←((lhs'\$')⎕R({' (Dollar) '}rhs))code
         code←((lhs'⍎')⎕R({' (eval) '}rhs))code
-        code←((lhs'⍫')⎕R({' (DelTilde) '}rhs))code
+        code←((lhs'…')⎕R({' (Range) '}rhs))code
         code←((lhs'⍳')⎕R({' (Iota) '}rhs))code
         code←((lhs'∆')⎕R({' (Increment) '}rhs))code
         code←((lhs'∇')⎕R({' (Decrement) '}rhs))code
@@ -37,7 +34,7 @@
     ⍝ string formatting of alpha
     Dollar←{∊('⍝'(≠⊆⊢)⍺),¨⍕¨⍵,⊂⍬}
     ⍝ a better index generator
-    DelTilde←{
+    Range←{
         0=⎕NC'⍺':{⍵<0:⌽-⍳|⍵⋄⍳⍵}⍵
         ⍺(⊣,⊣-∘(⍳∘|××)-)⍵
     }
