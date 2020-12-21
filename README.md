@@ -24,3 +24,9 @@ F
 ```
 
 Free glyps: 97. 0x93 and 0x94 are respectively space and newline. Consequently, xAPL programs should be scored according to the character amount.
+
+## Loading
+
+```
+⎕FIX'file:///path/to/the/repository/xapl.apl'
+```
