@@ -30,3 +30,30 @@ Free glyps: 97. 0x93 and 0x94 are respectively space and newline. Consequently, 
 ```
 ⎕FIX'file:///path/to/the/repository/xapl.apl'
 ```
+
+## Basic usage
+
+Evaluating a block of xAPL code:
+
+```
+      xapl.eval '√2'
+1.414213562
+```
+
+Evaluating a line from `stdin`:
+
+```
+      xapl.eval ⍞
+√2
+1.414213562
+```
+
+## Extensions
+
+`√`: Calculating the n-th root (second by default):
+```
+      xapl.eval '√2'
+1.414213562
+      xapl.eval '3×3√27'
+9
+```
