@@ -14,7 +14,7 @@ My golfing extensions to Dyalog APL
 6 rstuvwxyz0123456
 7 789ABCDEFGHIJKLM
 8 NOPQRSTUVWXYZ()[
-9 ]{}  '%𝑓$⍫⍭∆∇§√
+9 ]{}  '%𝑓$…⍭∆∇§√
 A
 B
 C
