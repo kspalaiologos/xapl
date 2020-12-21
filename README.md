@@ -92,17 +92,17 @@ For example:
 bcdfghjklmnpqrstvwxz
 ```
 
-`⍫`: A more reasonable index generator respecting `⎕IO`:
+`…`: A more reasonable index generator respecting `⎕IO`:
 ```
-      xapl.eval '⍫5'
+      xapl.eval '…5'
 1 2 3 4 5
-      xapl.eval '⍫¯5'
+      xapl.eval '…¯5'
 ¯5 ¯4 ¯3 ¯2 ¯1
-      xapl.eval '10⍫¯5'
+      xapl.eval '10…¯5'
 10 9 8 7 6 5 4 3 2 1 0 ¯1 ¯2 ¯3 ¯4 ¯5
-      xapl.eval '¯10⍫5'
+      xapl.eval '¯10…5'
 ¯10 ¯9 ¯8 ¯7 ¯6 ¯5 ¯4 ¯3 ¯2 ¯1 0 1 2 3 4 5
-      xapl.eval '¯10⍫¯5'
+      xapl.eval '¯10…¯5'
 ¯10 ¯9 ¯8 ¯7 ¯6 ¯5
 ```
 
@@ -122,7 +122,7 @@ a1b2c
 
 `𝑓`: Computing fibonacci sequence elements:
 ```
-      xapl.eval '𝑓¨⍫20'
+      xapl.eval '𝑓¨…20'
 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765
 ```
 
