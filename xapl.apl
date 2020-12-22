@@ -14,6 +14,7 @@
         code←((lhs'∇')⎕R({' (Decrement) '}rhs))code
         code←((lhs'§')⎕R({' (Inverse) '}rhs))code
         code←((lhs'√')⎕R({' (Root) '}rhs))code
+        code←((⎕UCS 10)⎕R('⋄'))code
         ⍎code
     }
 
