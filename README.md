@@ -45,11 +45,11 @@ Evaluating a line from `stdin`:
 ¯15   ⍝ 5 degrees fahrenheit is -15 degrees celcius.
 ```
 
-`∇` and `∆`: Decrement and increment, respectively:
+`<` and `>`: Decrement and increment when monadic, respectively:
 ```
-      xapl.eval '∆1'
+      xapl.eval '>1'
 2
-      xapl.eval '∇1'
+      xapl.eval '<1'
 0
 ```
 
