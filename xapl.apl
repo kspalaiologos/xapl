@@ -1,19 +1,38 @@
 
+⍝ Code page (prepended with space and newline):
+⍝ 10/16 rows.
+
 :Namespace xapl
+    ⍝ Code page (prepended with space and newline):
+    ⍝ 10/16 rows.
+    code_page←∊(⎕UCS 32)(⎕UCS 10)'''←+-÷×*⍟⌹○!?|⌈'
+    code_page,←'⊥⊤⊣⊢=≠≤<>≥≡≢∨∧⍲⍱'
+    code_page,←'⊂⊃⊆⌷⍋⍒⍳⍸∊⍷∪∩~/\⌿'
+    code_page,←'⍀,⍪⍴⌽⊖⍉¨⍨⍣.∘⍤⍥@⍞'
+    code_page,←'⎕⍠⌸⌺⌶⍎⍕⋄⍝→⍵⍺∇¯⍬a'
+    code_page,←'bcdefghijklmnopq'
+    code_page,←'rstuvwxyz0123456'
+    code_page,←'789ABCDEFGHIJKLM'
+    code_page,←'NOPQRSTUVWXYZ()['
+    code_page,←']{}%𝑓$⍫⍭∆§√φ⍩↑↓⌊'
+
     eval←{
         lhs←{('''[^'']+''|(',⍵,')')}
-        rhs←{(≢⍵.Offsets)=1:⍵.Match⋄⍺⍺0}
-        code←((lhs'%')⎕R({' (Percent) '}rhs))⍵
+        rhs←{(≢⍵.Offsets)=1:⍵.Match⋄⍺⍺⍵}
+        code←((lhs'⍩[^⍩ ]+⍩?')⎕R({∊' (⊣Decompress '''({(('⍩'=⊃⌽⍵)×¯1)↓1↓⍵}⍵.Match)''') '}rhs))⍵
+        code←((lhs'%')⎕R({' (Percent) '}rhs))code
         code←((lhs'𝑓')⎕R({' (FancyF) '}rhs))code
         code←((lhs'⍭')⎕R({' (StileTilde) '}rhs))code
         code←((lhs'\$')⎕R({' (Dollar) '}rhs))code
         code←((lhs'⍎')⎕R({' (eval) '}rhs))code
         code←((lhs'…')⎕R({' (Range) '}rhs))code
         code←((lhs'⍳')⎕R({' (Iota) '}rhs))code
-        code←((lhs'∆')⎕R({' (Increment) '}rhs))code
-        code←((lhs'∇')⎕R({' (Decrement) '}rhs))code
+        code←((lhs'>')⎕R({' (Greater) '}rhs))code
+        code←((lhs'<')⎕R({' (Lesser) '}rhs))code
         code←((lhs'§')⎕R({' (Inverse) '}rhs))code
         code←((lhs'√')⎕R({' (Root) '}rhs))code
+        code←((lhs'φ')⎕R({' (Totient) '}rhs))code
+        code←((lhs'~')⎕R({' (Tilde) '}rhs))code
         code←((⎕UCS 10)⎕R('⋄'))code
         ⍎code
     }
@@ -24,8 +43,6 @@
     Inverse←{⍺←⊢⋄⍺(⍺⍺⍣¯1)⍵}
     ⍝ Predecessor of a number.
     Decrement←{⍵-1}
-    ⍝ Increment of a number.
-    Increment←{⍵+1}
     ⍝ convert omega to base alpha, 2 by default.
     Percent←{⍺←2⋄(⍺∘⊥⍣¯1)⍵}
     ⍝ calculate omega-th fibonacci number
@@ -56,5 +73,41 @@
             ⍵=10:2÷¯1+5*÷2  ⍝ golden ratio
         }⍵
         ⍺⍳⍵
+    }
+    ⍝ greater than sign overload:
+    ⍝ added monadic behavior - increment
+    Greater←{
+        0=⎕NC'⍺':⍵+1
+        ⍺>⍵
+    }
+    ⍝ lesser than sign overload:
+    ⍝ added monadic behavior - decrement
+    Lesser←{
+        0=⎕NC'⍺':⍵-1
+        ⍺<⍵
+    }
+    ⍝ Monadic: Compute the value of Euler's totient.
+    ⍝ Dyadic: True if there is ⍺ in ⍵.
+    Totient←{
+        0=⎕NC'⍺':(+/1=⊢∨⍳)⍵
+        1=+/⍺=⍵
+    }
+    ⍝ Small negation domain extension.
+    ⍝     ~ 0 1 2 1 0
+    ⍝ 1 0 0 0 1
+    Tilde←{
+        0=⎕NC'⍺':0=⍵
+        ⍺~⍵
+    }
+    ⍝ Monadic: Primality test.
+    ⍝ Dyadic: repeat ⍵, ⍺ times.
+    Prime←{
+        0=⎕NC'⍺':1({⍵⊣⍵.⎕CY'dfns'}⎕NS⍬).pco ⍵
+        (⍺×⍴⍵)⍴⍵
+    }
+    ⍝ Decompress a (compressed) vector.
+    ⍝ Changing the base: ⍺⊥⍣¯1⊢((≢cp)-3)⊥((3↓cp)⍳⍵)
+    Decompress←{
+        0=⎕NC'⍺':(3↓code_page)⍳⍵
     }
 :EndNamespace
