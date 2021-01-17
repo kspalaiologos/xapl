@@ -15,12 +15,12 @@
     code_page,←'789ABCDEFGHIJKLM'
     code_page,←'NOPQRSTUVWXYZ()['
     code_page,←']{}%𝑓$⍫⍭∆§√φ⍩↑↓⌊'
+    code_page,←'"'
 
     eval←{
         lhs←{('''[^'']+''|(',⍵,')')}
         rhs←{(≢⍵.Offsets)=1:⍵.Match⋄⍺⍺⍵}
-        code←((lhs'⍩[^⍩ ]+⍩?')⎕R({∊' (⊣Decompress '''({(('⍩'=⊃⌽⍵)×¯1)↓1↓⍵}⍵.Match)''') '}rhs))⍵
-        code←((lhs'%')⎕R({' (Percent) '}rhs))code
+        code←((lhs'%')⎕R({' (Percent) '}rhs))⍵
         code←((lhs'𝑓')⎕R({' (FancyF) '}rhs))code
         code←((lhs'⍭')⎕R({' (StileTilde) '}rhs))code
         code←((lhs'\$')⎕R({' (Dollar) '}rhs))code
@@ -33,6 +33,9 @@
         code←((lhs'√')⎕R({' (Root) '}rhs))code
         code←((lhs'φ')⎕R({' (Totient) '}rhs))code
         code←((lhs'~')⎕R({' (Tilde) '}rhs))code
+        code←((lhs'⍩')⎕R({' (NthSatisfying) '}rhs))code
+        code←((lhs'')⎕R({' ({⍵⊣⍵.⎕CY''dfns''}⎕NS⍬). '}rhs))code
+        code←((lhs'"')⎕R({''''}rhs))code
         code←((⎕UCS 10)⎕R('⋄'))code
         ⍎code
     }
@@ -105,9 +108,6 @@
         0=⎕NC'⍺':1({⍵⊣⍵.⎕CY'dfns'}⎕NS⍬).pco ⍵
         (⍺×⍴⍵)⍴⍵
     }
-    ⍝ Decompress a (compressed) vector.
-    ⍝ Changing the base: ⍺⊥⍣¯1⊢((≢cp)-3)⊥((3↓cp)⍳⍵)
-    Decompress←{
-        0=⎕NC'⍺':(3↓code_page)⍳⍵
-    }
+    ⍝ Dyadic: pick n-th satisfying a criterion.
+    NthSatisfying←{x←⍵⋄n←0⋄⍺⍺{y←1+⍵⋄n+←⍺⍺y⋄y}⍣{n=x}0}
 :EndNamespace
