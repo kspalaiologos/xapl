@@ -1,6 +1,7 @@
 
-⍝ Code page (prepended with space and newline):
-⍝ 10/16 rows.
+⍝ xAPL: a few APL golfing extensions.
+⍝ originally made possible by Kamila Szewczyk
+⍝ includes various improvements and code snippets coined in by Razetime.
 
 :Namespace xapl
     ⍝ Code page (prepended with space and newline):
@@ -15,7 +16,7 @@
     code_page,←'789ABCDEFGHIJKLM'
     code_page,←'NOPQRSTUVWXYZ()['
     code_page,←']{}%𝑓$⍫⍭∆§√φ⍩↑↓⌊'
-    code_page,←'"'
+    code_page,←'"⍈'
 
     eval←{
         lhs←{('''[^'']+''|(',⍵,')')}
@@ -35,6 +36,7 @@
         code←((lhs'~')⎕R({' (Tilde) '}rhs))code
         code←((lhs'⍩')⎕R({' (NthSatisfying) '}rhs))code
         code←((lhs'')⎕R({' ({⍵⊣⍵.⎕CY''dfns''}⎕NS⍬). '}rhs))code
+        code←((lhs'⍈')⎕R({' ({⍵⊣⍵.⎕CY''dfns''}⎕NS⍬). '}rhs))code
         code←((lhs'"')⎕R({''''}rhs))code
         code←((⎕UCS 10)⎕R('⋄'))code
         ⍎code
@@ -53,7 +55,10 @@
     ⍝ filter operator
     StileTilde←{⍵/⍨⍺⍺⍵}
     ⍝ string formatting of alpha
-    Dollar←{∊('⍝'(≠⊆⊢)⍺),¨⍕¨⍵,⊂⍬}
+    Dollar←{
+        0=⎕NC'⍺':{⍵/⍨~=/¨⍵}((⊃,∘⊃∘⌽⊢)¨⊢⊆⊢×∘⍳⍴)⍵
+        ∊('⍝'(≠⊆⊢)⍺),¨⍕¨⍵,⊂⍬
+    }
     ⍝ a better index generator
     Range←{
         0=⎕NC'⍺':{⍵<0:⌽-⍳|⍵⋄⍳⍵}⍵
@@ -110,4 +115,7 @@
     }
     ⍝ Dyadic: pick n-th satisfying a criterion.
     NthSatisfying←{x←⍵⋄n←0⋄⍺⍺{y←1+⍵⋄n+←⍺⍺y⋄y}⍣{n=x}0}
+    ⍝ Dyadic: mapping values.
+    ⍝ 'a' 2 'b' 4 ⍈ 'abab'
+    MapValues←{k v←↓⍉2(⊢⍴⍨÷⍨∘≢,⊣)⍺⋄{⊃v[k⍳⍵]}¨⍵}
 :EndNamespace
